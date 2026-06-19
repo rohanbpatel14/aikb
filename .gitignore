@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# AIKB local artifacts
+*.aikb/
+aikb-index/
+*.aikb-index/
+
+# OS
+.DS_Store
+
+# Test scratch
+/tmp-fixtures/
+.scratch/
