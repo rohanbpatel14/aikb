@@ -138,6 +138,22 @@ Plugin caches, `node_modules`, browser storage, Python stubs, and vendor bundles
 
 ---
 
+## ⚖️ How it compares
+
+There's real prior art here — and aikb isn't trying to beat it head-on. The wedge is **coding-agent coverage + zero setup**, not semantic search (yet).
+
+| Tool | Approach | Best at |
+|---|---|---|
+| **aikb** | local CLI · keyword + fuzzy · **zero dependencies** · source-linked · topic-pack review | widest **coding-agent** coverage — **Codex, Cursor, Claude Code, Gemini** — with no model download or setup |
+| [MyChatArchive](https://github.com/1ch1n/mychatarchive) | local · **semantic embeddings** · **MCP** (ask Claude in-app) | conversational retrieval of ChatGPT/Claude/Grok history |
+| ChatVault | local · semantic / RAG (ChromaDB, Ollama) | RAG-style chat over ChatGPT/Claude/Gemini |
+| ripgrep / grep | exact text match | when you remember the exact string |
+| Obsidian / Notion | manual notes | knowledge you deliberately wrote down |
+
+**Honest take:** aikb trades semantic search for zero dependencies and the broadest coding-agent reach. If you want in-app semantic retrieval, MyChatArchive and ChatVault are excellent. If you want a dependency-free CLI that also indexes Codex and Gemini, that's aikb. (Semantic search + an MCP server are on the roadmap.)
+
+---
+
 ## 🔐 Privacy
 
 ```text

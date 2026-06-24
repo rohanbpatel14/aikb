@@ -19,3 +19,7 @@ aikb-index/
 # Test scratch
 /tmp-fixtures/
 .scratch/
+
+# Private notes (never published)
+INTERVIEW-NOTES.md
+*.private.md
