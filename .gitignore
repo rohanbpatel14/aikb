@@ -8,10 +8,14 @@ dist/
 .venv/
 venv/
 
-# AIKB local artifacts
+# AIKB local artifacts — these hold YOUR private chat content. Never commit.
 *.aikb/
 aikb-index/
 *.aikb-index/
+idx/
+*-index/
+*-pack/
+my-aikb/
 
 # OS
 .DS_Store
