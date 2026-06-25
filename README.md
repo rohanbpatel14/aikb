@@ -167,6 +167,15 @@ For private chat history, *local-first isn't a feature — it's the requirement.
 
 ---
 
+## 📚 Documentation
+
+- **[Architecture](docs/ARCHITECTURE.md)** — the pipeline, the `Record` model, storage, the topic engine, and design decisions
+- **[Knowledge-transfer map](docs/KNOWLEDGE-TRANSFER.md)** — pick up the codebase cold: 15-minute reading order, file map, glossary, invariants
+- **[Adapter guide](docs/ADAPTERS.md)** — add a new source in one file (worked ChatGPT-export example)
+- **[Walkthrough & demos](docs/WALKTHROUGH.md)** — runnable end-to-end demos with real output
+
+---
+
 ## 🗺️ Status & roadmap
 
 **v0.1 (now):** scan · index · search · topic packs · review · export · timeline — across Claude, Claude Code, Codex, Cursor, Gemini, generic.
