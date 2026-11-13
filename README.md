@@ -5,7 +5,8 @@
 ### Turn years of scattered AI chats into one searchable, source-linked memory. Locally.
 
 <p>
-  <img alt="version" src="https://img.shields.io/badge/version-0.1.0-2b6cb0">
+  <a href="https://github.com/rohanbpatel14/aikb/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/rohanbpatel14/aikb/actions/workflows/ci.yml/badge.svg"></a>
+  <img alt="version" src="https://img.shields.io/badge/version-0.2.0-2b6cb0">
   <img alt="python" src="https://img.shields.io/badge/python-3.9%2B-3776ab">
   <img alt="dependencies" src="https://img.shields.io/badge/runtime%20deps-0-2f9e44">
   <img alt="local-first" src="https://img.shields.io/badge/local--first-no%20cloud%20%C2%B7%20no%20telemetry-2f9e44">
@@ -121,6 +122,17 @@ aikb topic export ./idx apace --out ./pack --format all
 aikb timeline ./idx --topic apace             # reconstruct what happened, when
 ```
 
+### 🧭 Find what no topic covers yet — `coverage`
+
+A topic only finds what you seed it with, so it can't tell you what *else* is in there. `coverage` is the inverse view: every conversation that isn't a high- or medium-confidence match for **any** topic, counted by month, plus the words that keep recurring in those leftovers. Suggested words have to be at least twice as common in the leftovers as in the conversations your topics already claim, so everyday words don't crowd out the subjects you forgot to name.
+
+```bash
+aikb coverage ./idx                 # claimed vs leftover, leftovers by month, term ideas
+aikb coverage ./idx --limit 0       # list every leftover conversation
+aikb topic create ./idx poker --terms "bankroll,holdem"   # seed a new topic from the ideas
+aikb coverage ./idx                 # rerun until the leftovers are small
+```
+
 ---
 
 ## 🧩 Supported sources
@@ -174,11 +186,19 @@ For private chat history, *local-first isn't a feature — it's the requirement.
 - **[Adapter guide](docs/ADAPTERS.md)** — add a new source in one file (worked ChatGPT-export example)
 - **[Walkthrough & demos](docs/WALKTHROUGH.md)** — runnable end-to-end demos with real output
 
+**Run the tests** (stdlib only at runtime; pytest just for the runner):
+
+```bash
+python3 -m pip install pytest && python3 -m pytest -q
+```
+
 ---
 
 ## 🗺️ Status & roadmap
 
-**v0.1 (now):** scan · index · search · topic packs · review · export · timeline — across Claude, Claude Code, Codex, Cursor, Gemini, generic.
+**v0.2 (now):** `coverage` (what no topic has claimed yet), `timeline` shows your whole history by default, matching-rule tests, CI on Python 3.10–3.13. See [CHANGELOG](CHANGELOG.md).
+
+**v0.1:** scan · index · search · topic packs · review · export · timeline — across Claude, Claude Code, Codex, Cursor, Gemini, generic.
 
 **Next:** ChatGPT export adapter · semantic (embedding) search · optional local-LLM summaries (`decisions.md`, `open-loops.md`) · desktop/web UI · "send topic pack to an AI" one-liner.
 

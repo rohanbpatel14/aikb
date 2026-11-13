@@ -71,7 +71,7 @@ class Walker:
         from fnmatch import fnmatch
         return any(fnmatch(path, pat) or pat in path for pat in self.includes)
 
-    def _ignored(self, path: str) -> bool:
+    def _ignored(self, path: str, root: str = "") -> bool:
         if self._included(path):
             return False
         base = os.path.basename(path)
@@ -82,10 +82,12 @@ class Walker:
             return True
         if not self.use_default:
             return any(frag in path for frag in self.extra)
-        parts = set(path.split(os.sep))
-        if parts & SEGMENT_IGNORES:
+        # Noise rules judge only what lies below the root being indexed. Where the
+        # root itself lives (/tmp/..., ~/build/exports) is the user's choice, not noise.
+        below = os.path.relpath(path, root) if root else path
+        if set(below.split(os.sep)) & SEGMENT_IGNORES:
             return True
-        if any(sub in path for sub in SUBSTR_IGNORES):
+        if any(sub in os.sep + below + os.sep for sub in SUBSTR_IGNORES):
             return True
         if any(frag in path for frag in self.extra):
             return True
@@ -102,7 +104,7 @@ class Walker:
             kept = []
             for d in dirnames:
                 full = os.path.join(dirpath, d)
-                if self._ignored(full):
+                if self._ignored(full, root):
                     self.skipped += 1
                 else:
                     kept.append(d)
@@ -110,7 +112,7 @@ class Walker:
             for fn in filenames:
                 full = os.path.join(dirpath, fn)
                 self.seen += 1
-                if self._ignored(full):
+                if self._ignored(full, root):
                     self.skipped += 1
                     continue
                 yield full

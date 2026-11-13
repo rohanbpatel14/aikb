@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aikb"
-version = "0.1.0"
+version = "0.2.0"
 description = "Local-first knowledge-archaeology CLI: turn messy AI chat exports and agent workspaces into a searchable, source-linked memory."
 readme = "README.md"
 requires-python = ">=3.9"

@@ -194,6 +194,11 @@ def build_parser() -> argparse.ArgumentParser:
         register_timeline(sub)
     except Exception:
         pass
+    try:
+        from .coverage import register as register_coverage
+        register_coverage(sub)
+    except Exception:
+        pass
 
     return p
 
