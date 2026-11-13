@@ -7,6 +7,9 @@
 - CI on GitHub Actions: Python 3.9, 3.11 and 3.13 on Ubuntu, plus 3.13 on macOS.
 - Tests for coverage, timeline, and the matching rules topic packs depend on (whole-word short terms, fuzzy long terms, confidence buckets, term suggestions).
 
+**Fixed**
+- Indexing a folder that lives under a directory the noise filter ignores (for example `/tmp/...` on Linux, or `~/build/exports`) silently indexed nothing. Noise rules now apply only below the folder being indexed. The new CI caught this on its first Linux run.
+
 **Changed**
 - `aikb timeline` now shows the whole history by default; it used to stop silently at 300 entries. `--limit N` still caps it.
 - Term suggestions strip sentence punctuation ("expected." becomes "expected") and keep dotted names like `node.js`.
