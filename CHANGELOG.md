@@ -4,7 +4,7 @@
 
 **Added**
 - `aikb coverage <index>`: every conversation that no topic claims as a high- or medium-confidence match (directly or through one of its messages), counted by month, with suggested terms for the next topic. Suggestions must be at least twice as common in the leftovers as in claimed conversations, so everyday words are filtered out.
-- CI on GitHub Actions: Python 3.9, 3.11 and 3.13 on Ubuntu, plus 3.13 on macOS.
+- CI on GitHub Actions: Python 3.10, 3.12 and 3.13 on Ubuntu, plus 3.13 on macOS. (Ubuntu runners no longer ship 3.9; it still works and was tested locally on macOS's system Python 3.9.)
 - Tests for coverage, timeline, and the matching rules topic packs depend on (whole-word short terms, fuzzy long terms, confidence buckets, term suggestions).
 
 **Fixed**

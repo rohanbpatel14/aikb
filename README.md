@@ -196,7 +196,7 @@ python3 -m pip install pytest && python3 -m pytest -q
 
 ## 🗺️ Status & roadmap
 
-**v0.2 (now):** `coverage` (what no topic has claimed yet), `timeline` shows your whole history by default, matching-rule tests, CI on Python 3.9–3.13. See [CHANGELOG](CHANGELOG.md).
+**v0.2 (now):** `coverage` (what no topic has claimed yet), `timeline` shows your whole history by default, matching-rule tests, CI on Python 3.10–3.13. See [CHANGELOG](CHANGELOG.md).
 
 **v0.1:** scan · index · search · topic packs · review · export · timeline — across Claude, Claude Code, Codex, Cursor, Gemini, generic.
 
