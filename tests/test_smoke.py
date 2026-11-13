@@ -85,8 +85,6 @@ def test_index_search_and_topic():
             assert high, "expected at least one high-confidence apace match"
             assert all("Tokyo" not in c.text for c in high), "travel chat leaked into apace"
 
-    return True
-
 
 if __name__ == "__main__":
     test_index_search_and_topic()

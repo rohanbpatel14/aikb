@@ -16,7 +16,7 @@ import time
 from collections import Counter
 from dataclasses import dataclass, field
 from functools import lru_cache
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from . import console as c
 from .db import Index, fts_or_query
@@ -187,25 +187,44 @@ def bucket_counts(cands: List[Candidate]) -> Counter:
 
 
 def suggest_terms(cands: List[Candidate], existing: List[str], top: int = 15) -> List[tuple]:
-    """Co-occurrence expansion: terms frequent in strong matches but NOT ubiquitous.
+    """Co-occurrence expansion over a topic's strong (high/medium) matches."""
+    strong = [cand.text for cand in cands if cand.bucket in ("high", "medium")]
+    return suggest_from_texts(strong, existing, top)
 
-    A word appearing in almost every match (users, tool, code) is scaffolding,
-    not signal. We keep the mid-frequency band — distinctive enough to matter
-    (graphql, rails, invoice), common enough to be a real theme.
-    """
-    have = {squash(t) for t in existing}
-    strong = [c for c in cands if c.bucket in ("high", "medium")]
-    n = len(strong) or 1
+
+def _doc_freq(texts: List[str], have: set) -> Counter:
     freq: Counter = Counter()
-    for cand in strong:
+    for text in texts:
         seen = set()
-        for w in _WORD.findall(cand.text.lower()):
+        for w in _WORD.findall(text.lower()):
+            w = w.rstrip(".-")  # sentence-final "expected." -> "expected"; keeps "node.js"
             if w in _STOP or len(w) < 4 or squash(w) in have or w in seen:
                 continue
-            seen.add(w)  # document frequency: count each word once per record
+            seen.add(w)  # document frequency: count each word once per text
             freq[w] += 1
-    cap = max(3, int(0.5 * n))  # drop words present in >50% of strong matches
+    return freq
+
+
+def suggest_from_texts(texts: List[str], existing: List[str], top: int = 15,
+                       background: Optional[List[str]] = None) -> List[tuple]:
+    """Terms frequent across these texts but NOT ubiquitous.
+
+    A word appearing in almost every text (users, tool, code) is scaffolding,
+    not signal. We keep the mid-frequency band — distinctive enough to matter
+    (graphql, rails, invoice), common enough to be a real theme.
+
+    With `background` texts, a word must also be at least twice as common here
+    as there, so everyday words ("before", "directory") that run through every
+    conversation don't crowd out the ones that mark a new subject.
+    """
+    have = {squash(t) for t in existing}
+    n = len(texts) or 1
+    freq = _doc_freq(texts, have)
+    cap = max(3, int(0.5 * n))  # drop words present in >50% of the texts
     ranked = [(w, f) for w, f in freq.items() if 3 <= f <= cap]
+    if background:
+        bg, bn = _doc_freq(background, have), len(background)
+        ranked = [(w, f) for w, f in ranked if f / n > 2 * bg[w] / bn]
     ranked.sort(key=lambda x: -x[1])
     return ranked[:top]
 

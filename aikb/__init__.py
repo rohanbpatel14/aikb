@@ -6,6 +6,6 @@ Cursor, generic docs) into a searchable, source-linked knowledge archive.
 Everything runs locally. No telemetry, no uploads, no LLM calls by default.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __author__ = "Rohan Patel"
 __author_url__ = "https://github.com/rohanbpatel14"

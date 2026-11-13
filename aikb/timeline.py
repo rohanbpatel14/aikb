@@ -28,7 +28,8 @@ def cmd_timeline(args) -> int:
 
     items = [it for it in items if it[0]]
     items.sort(key=lambda x: x[0] or "")
-    items = items[: args.limit]
+    if args.limit:
+        items = items[: args.limit]
 
     label = f"timeline · {args.topic}" if args.topic else "timeline"
     print(c.header(label) + c.dim(f"  {len(items)} entries"))
@@ -47,5 +48,5 @@ def register(sub) -> None:
     sp = sub.add_parser("timeline", help="chronological view (optionally for one topic)")
     sp.add_argument("index")
     sp.add_argument("--topic", default=None, help="restrict to a topic's strong matches")
-    sp.add_argument("--limit", type=int, default=300)
+    sp.add_argument("--limit", type=int, default=0, help="max entries to show (0 = all)")
     sp.set_defaults(func=cmd_timeline)
